@@ -31,22 +31,21 @@
             background-color: #050a18;
         }
 
-        /* ESCENA CENTRAL: Mantiene ramos y sobre pegados siempre */
         .scene {
             position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
             width: 100%;
-            max-width: 800px;
+            max-width: 1200px;
             height: 100%;
         }
 
+        /* SOBRE */
         .container {
             position: relative;
             cursor: pointer;
             z-index: 100;
-            flex-shrink: 0;
         }
 
         .envelope {
@@ -93,56 +92,72 @@
         .container.open .envelope::before { transform: rotateX(180deg); z-index: 1; }
         .container.open .letter { transform: translateY(-160px); opacity: 1; z-index: 15; }
 
-        /* DECORACIONES: Corregido el ancho y posicionamiento */
+        /* DECORACIONES Y FOTOS (ORDENADAS) */
         .decoration {
             position: absolute;
-            width: 200px; /* Tamaño fijo para que no desaparezca */
-            height: 400px;
+            width: 250px;
+            height: 500px;
             opacity: 0;
-            transition: all 1s ease-in-out;
+            transition: all 1.2s ease-in-out;
             pointer-events: none;
             z-index: 50;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: space-evenly;
         }
 
-        /* Usamos posiciones porcentuales respecto al centro de .scene */
-        .left-side { right: 55%; align-items: flex-end; }
-        .right-side { left: 55%; align-items: flex-start; }
+        /* Posicionamiento para que NO toquen la carta */
+        .left-side { right: 58%; align-items: flex-end; }
+        .right-side { left: 58%; align-items: flex-start; }
 
         .container.open ~ .decoration { opacity: 1; }
 
         .branch-img {
             position: absolute;
-            width: 300px; /* Los ramos son más grandes que el contenedor de fotos */
+            width: 350px;
             height: 100%;
             object-fit: contain;
             z-index: -1;
         }
 
-        .left-side .branch-img { right: -50px; }
-        .right-side .branch-img { left: -50px; }
+        .left-side .branch-img { right: -60px; }
+        .right-side .branch-img { left: -60px; }
 
+        /* Estilo Collage para las fotos */
         .mini-photo {
-            width: 80px;
-            height: 80px;
-            border: 3px solid white;
-            border-radius: 5px;
+            width: 90px;
+            height: 90px;
+            border: 4px solid white;
+            border-radius: 2px;
             object-fit: cover;
             box-shadow: 0 5px 15px rgba(0,0,0,0.4);
-            margin: 5px;
             z-index: 51;
+            transition: transform 0.3s;
         }
 
-        /* Ajustes específicos para móviles (S23 Ultra) */
+        /* Dispersión manual para que se vean todas */
+        .left-side .mini-photo:nth-child(2) { transform: rotate(-10deg) translateX(-20px); }
+        .left-side .mini-photo:nth-child(3) { transform: rotate(5deg) translateX(10px); }
+        .left-side .mini-photo:nth-child(4) { transform: rotate(-15deg) translateX(-30px); }
+        .left-side .mini-photo:nth-child(5) { transform: rotate(8deg) translateX(0px); }
+
+        .right-side .mini-photo:nth-child(2) { transform: rotate(10deg) translateX(20px); }
+        .right-side .mini-photo:nth-child(3) { transform: rotate(-5deg) translateX(-10px); }
+        .right-side .mini-photo:nth-child(4) { transform: rotate(15deg) translateX(30px); }
+        .right-side .mini-photo:nth-child(5) { transform: rotate(-8deg) translateX(0px); }
+
+        /* AJUSTES MÓVILES (S23 ULTRA) */
         @media (max-width: 600px) {
-            .envelope { width: 200px; height: 130px; }
-            .envelope::before { border-left-width: 100px; border-right-width: 100px; border-top-width: 65px; }
-            .decoration { width: 100px; }
-            .branch-img { width: 180px; }
-            .mini-photo { width: 55px; height: 55px; }
-            .container.open .letter { transform: translateY(-110px); }
+            .envelope { width: 180px; height: 120px; }
+            .envelope::before { border-left-width: 90px; border-right-width: 90px; border-top-width: 60px; }
+            .decoration { width: 120px; height: 400px; }
+            .mini-photo { width: 65px; height: 65px; }
+            .left-side { right: 52%; }
+            .right-side { left: 52%; }
+            .container.open .letter { transform: translateY(-120px); font-size: 0.85rem; }
+            /* Menos dispersión en móvil para no salirse */
+            .left-side .mini-photo { transform: rotate(-5deg) !important; }
+            .right-side .mini-photo { transform: rotate(5deg) !important; }
         }
 
         .particle {
@@ -197,7 +212,7 @@
             
             if (container.classList.contains('open')) {
                 document.body.classList.add('night-mode');
-                music.play().catch(e => console.log("Audio block"));
+                music.play().catch(e => console.log("Interacción necesaria"));
                 for (let i = 0; i < 30; i++) { setTimeout(createParticle, i * 150); }
             } else {
                 document.body.classList.remove('night-mode');
