@@ -40,7 +40,7 @@
             height: 100%;
         }
 
-        /* SOBRE Y CARTA */
+        /* SOBRE CENTRAL */
         .container {
             position: relative;
             cursor: pointer;
@@ -91,65 +91,70 @@
         .container.open .envelope::before { transform: rotateX(180deg); z-index: 1; }
         .container.open .letter { transform: translateY(-160px); opacity: 1; z-index: 15; }
 
-        /* DECORACIONES Y FOTOS ORDENADAS */
+        /* DECORACIONES LATERALES */
         .decoration {
             position: absolute;
             width: 300px;
-            height: 500px;
+            height: 550px;
             opacity: 0;
             transition: all 1.2s ease-in-out;
             pointer-events: none;
             z-index: 50;
             display: flex;
             flex-direction: column;
-            justify-content: space-around;
+            justify-content: space-between;
         }
 
-        .left-side { right: 55%; align-items: flex-end; }
-        .right-side { left: 55%; align-items: flex-start; }
+        /* Empujamos las fotos más hacia afuera del centro */
+        .left-side { right: 60%; align-items: flex-end; }
+        .right-side { left: 60%; align-items: flex-start; }
 
         .container.open ~ .decoration { opacity: 1; }
 
         .branch-img {
             position: absolute;
-            width: 100%;
+            width: 380px;
             height: 100%;
             object-fit: contain;
             z-index: -1;
         }
 
-        /* Estilo para que las FOTOS se vean en orden */
+        .left-side .branch-img { right: -80px; }
+        .right-side .branch-img { left: -80px; }
+
         .mini-photo {
-            width: 85px;
-            height: 85px;
+            width: 95px;
+            height: 95px;
             border: 4px solid white;
             border-radius: 2px;
             object-fit: cover;
             box-shadow: 0 5px 15px rgba(0,0,0,0.4);
             z-index: 51;
-            transition: transform 0.3s;
         }
 
-        /* Posiciones manuales para que NO se tapen */
-        .left-side .mini-photo:nth-child(2) { transform: rotate(-10deg) translate(-20px, 0px); }
-        .left-side .mini-photo:nth-child(3) { transform: rotate(5deg) translate(10px, 0px); }
-        .left-side .mini-photo:nth-child(4) { transform: rotate(-15deg) translate(-30px, 0px); }
-        .left-side .mini-photo:nth-child(5) { transform: rotate(8deg) translate(5px, 0px); }
+        /* Posiciones laterales estratégicas */
+        .left-side .mini-photo:nth-child(2) { transform: rotate(-12deg) translateX(-35px); }
+        .left-side .mini-photo:nth-child(3) { transform: rotate(8deg) translateX(15px); }
+        .left-side .mini-photo:nth-child(4) { transform: rotate(-18deg) translateX(-45px); }
+        .left-side .mini-photo:nth-child(5) { transform: rotate(10deg) translateX(10px); }
 
-        .right-side .mini-photo:nth-child(2) { transform: rotate(10deg) translate(20px, 0px); }
-        .right-side .mini-photo:nth-child(3) { transform: rotate(-5deg) translate(-10px, 0px); }
-        .right-side .mini-photo:nth-child(4) { transform: rotate(15deg) translate(30px, 0px); }
-        .right-side .mini-photo:nth-child(5) { transform: rotate(-8deg) translate(-5px, 0px); }
+        .right-side .mini-photo:nth-child(2) { transform: rotate(12deg) translateX(35px); }
+        .right-side .mini-photo:nth-child(3) { transform: rotate(-8deg) translateX(-15px); }
+        .right-side .mini-photo:nth-child(4) { transform: rotate(18deg) translateX(45px); }
+        .right-side .mini-photo:nth-child(5) { transform: rotate(-10deg) translateX(-10px); }
 
-        /* AJUSTES PARA TU S23 ULTRA */
+        /* OPTIMIZACIÓN MÓVIL (S23 ULTRA) */
         @media (max-width: 600px) {
-            .envelope { width: 200px; height: 130px; }
-            .envelope::before { border-left-width: 100px; border-right-width: 100px; border-top-width: 65px; }
-            .decoration { width: 120px; }
-            .mini-photo { width: 60px; height: 60px; }
-            .left-side { right: 52%; }
-            .right-side { left: 52%; }
-            .container.open .letter { transform: translateY(-110px); font-size: 0.8rem; }
+            .envelope { width: 180px; height: 120px; }
+            .envelope::before { border-left-width: 90px; border-right-width: 90px; border-top-width: 60px; }
+            .decoration { width: 130px; height: 420px; }
+            .mini-photo { width: 68px; height: 68px; }
+            .left-side { right: 54%; }
+            .right-side { left: 54%; }
+            .container.open .letter { transform: translateY(-125px); font-size: 0.85rem; }
+            /* Suavizamos el movimiento en móvil para que no se corten */
+            .left-side .mini-photo { transform: rotate(-6deg) translateX(-15px) !important; }
+            .right-side .mini-photo { transform: rotate(6deg) translateX(15px) !important; }
         }
 
         .particle {
@@ -204,7 +209,7 @@
             
             if (container.classList.contains('open')) {
                 document.body.classList.add('night-mode');
-                music.play().catch(e => console.log("Audio play blocked"));
+                music.play().catch(e => console.log("Audio block active"));
                 for (let i = 0; i < 30; i++) { setTimeout(createParticle, i * 150); }
             } else {
                 document.body.classList.remove('night-mode');
