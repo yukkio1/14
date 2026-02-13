@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Para mi persona favorita ❤️</title>
     <style>
         :root {
@@ -16,7 +16,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
             font-family: 'Georgia', serif;
             overflow: hidden;
@@ -31,21 +31,22 @@
             background-color: #050a18;
         }
 
-        /* CONTENEDOR MAESTRO: Mantiene todo unido */
+        /* ESCENA CENTRAL: Mantiene ramos y sobre pegados siempre */
         .scene {
             position: relative;
-            width: 100%;
-            max-width: 1000px;
-            height: 400px;
             display: flex;
             justify-content: center;
             align-items: center;
+            width: 100%;
+            max-width: 800px;
+            height: 100%;
         }
 
         .container {
             position: relative;
             cursor: pointer;
             z-index: 100;
+            flex-shrink: 0;
         }
 
         .envelope {
@@ -92,13 +93,13 @@
         .container.open .envelope::before { transform: rotateX(180deg); z-index: 1; }
         .container.open .letter { transform: translateY(-160px); opacity: 1; z-index: 15; }
 
-        /* RAMOS Y FOTOS: Ahora usan posiciones fijas relativas al centro */
+        /* DECORACIONES: Corregido el ancho y posicionamiento */
         .decoration {
             position: absolute;
-            width: 300px;
-            height: 450px;
+            width: 200px; /* Tamaño fijo para que no desaparezca */
+            height: 400px;
             opacity: 0;
-            transition: all 1.2s ease-in-out;
+            transition: all 1s ease-in-out;
             pointer-events: none;
             z-index: 50;
             display: flex;
@@ -106,29 +107,26 @@
             justify-content: center;
         }
 
-        .left-side { 
-            right: 55%; /* Se pega al lado izquierdo del sobre */
-            align-items: flex-end; 
-        }
-
-        .right-side { 
-            left: 55%; /* Se pega al lado derecho del sobre */
-            align-items: flex-start; 
-        }
+        /* Usamos posiciones porcentuales respecto al centro de .scene */
+        .left-side { right: 55%; align-items: flex-end; }
+        .right-side { left: 55%; align-items: flex-start; }
 
         .container.open ~ .decoration { opacity: 1; }
 
         .branch-img {
             position: absolute;
-            width: 100%;
+            width: 300px; /* Los ramos son más grandes que el contenedor de fotos */
             height: 100%;
             object-fit: contain;
             z-index: -1;
         }
 
+        .left-side .branch-img { right: -50px; }
+        .right-side .branch-img { left: -50px; }
+
         .mini-photo {
-            width: 85px;
-            height: 85px;
+            width: 80px;
+            height: 80px;
             border: 3px solid white;
             border-radius: 5px;
             object-fit: cover;
@@ -137,15 +135,14 @@
             z-index: 51;
         }
 
-        /* Ajustes para pantallas pequeñas (S23 Ultra) */
-        @media (max-width: 768px) {
-            .envelope { width: 220px; height: 140px; }
-            .envelope::before { border-left-width: 110px; border-right-width: 110px; border-top-width: 70px; }
-            .decoration { width: 140px; }
-            .mini-photo { width: 60px; height: 60px; }
-            .left-side { right: 52%; }
-            .right-side { left: 52%; }
-            .container.open .letter { transform: translateY(-120px); font-size: 0.9rem; }
+        /* Ajustes específicos para móviles (S23 Ultra) */
+        @media (max-width: 600px) {
+            .envelope { width: 200px; height: 130px; }
+            .envelope::before { border-left-width: 100px; border-right-width: 100px; border-top-width: 65px; }
+            .decoration { width: 100px; }
+            .branch-img { width: 180px; }
+            .mini-photo { width: 55px; height: 55px; }
+            .container.open .letter { transform: translateY(-110px); }
         }
 
         .particle {
@@ -171,13 +168,13 @@
             <div class="letter">
                 <p><strong>¡Vámonos a Marte!</strong></p>
                 <p>Donde nadie nos busque... ✨</p>
-                <p>Feliz 14 de febrero.</p>
+                <p>Te amo, preciosa.</p>
                 <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" width="20">
             </div>
         </div>
 
         <div class="decoration left-side">
-            <img src="izquierda.jpg" class="branch-img">
+            <img src="izquierda.png" class="branch-img">
             <img src="foto1.jpg" class="mini-photo">
             <img src="foto2.jpg" class="mini-photo">
             <img src="foto3.jpg" class="mini-photo">
@@ -185,7 +182,7 @@
         </div>
 
         <div class="decoration right-side">
-            <img src="derecha.jpg" class="branch-img">
+            <img src="derecha.png" class="branch-img">
             <img src="foto5.jpg" class="mini-photo">
             <img src="foto6.jpg" class="mini-photo">
             <img src="foto7.jpg" class="mini-photo">
@@ -200,7 +197,7 @@
             
             if (container.classList.contains('open')) {
                 document.body.classList.add('night-mode');
-                music.play().catch(e => console.log("Play blocked"));
+                music.play().catch(e => console.log("Audio block"));
                 for (let i = 0; i < 30; i++) { setTimeout(createParticle, i * 150); }
             } else {
                 document.body.classList.remove('night-mode');
