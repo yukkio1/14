@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Para mi persona favorita ❤️</title>
+    <title>Para mi persona favorita </title>
     <style>
         :root {
             --color-env: #ff4d6d;
@@ -40,7 +40,7 @@
             height: 100%;
         }
 
-        /* SOBRE */
+        /* SOBRE (Tamaño PC) */
         .container {
             position: relative;
             cursor: pointer;
@@ -131,23 +131,41 @@
             z-index: 51;
         }
 
-        /* AJUSTE MOVIL: FOTOS A LOS COSTADOS EXTREMOS */
+        /* AJUSTE MÓVIL DEFINITIVO */
         @media (max-width: 600px) {
-            .envelope { width: 180px; height: 120px; }
-            .envelope::before { border-left-width: 90px; border-right-width: 90px; border-top-width: 60px; }
+            /* Sobre y carta más pequeños */
+            .envelope { 
+                width: 160px; 
+                height: 110px; 
+            }
+            .envelope::before { 
+                border-left-width: 80px; 
+                border-right-width: 80px; 
+                border-top-width: 55px; 
+            }
             
-            .decoration { width: 100px; height: 450px; }
-            .mini-photo { width: 60px; height: 60px; }
+            .decoration { 
+                width: 100px; 
+                height: 480px; /* Un poco más alto para separar fotos */
+            }
+            .mini-photo { 
+                width: 62px; 
+                height: 62px; 
+            }
 
-            /* Empujamos las fotos hacia los bordes de la pantalla */
-            .left-side { right: 68%; } 
-            .right-side { left: 68%; }
+            /* Fotos más alejadas hacia los bordes */
+            .left-side { right: 72%; } 
+            .right-side { left: 72%; }
 
-            .container.open .letter { transform: translateY(-130px); font-size: 0.85rem; }
+            /* Carta pequeña para que no tape nada */
+            .container.open .letter { 
+                transform: translateY(-100px); 
+                font-size: 0.75rem; 
+                padding: 10px;
+            }
 
-            /* Rotación para que miren hacia el centro */
-            .left-side .mini-photo { transform: rotate(-8deg) translateX(-10px) !important; }
-            .right-side .mini-photo { transform: rotate(8deg) translateX(10px) !important; }
+            .left-side .mini-photo { transform: rotate(-10deg) translateX(-5px) !important; }
+            .right-side .mini-photo { transform: rotate(10deg) translateX(5px) !important; }
         }
 
         .particle {
@@ -174,7 +192,7 @@
                 <p><strong>¡Vámonos a Marte!</strong></p>
                 <p>Donde nadie nos busque... ✨</p>
                 <p>Feliz 14 de Febrero.</p>
-                <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" width="20">
+                <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" width="15">
             </div>
         </div>
 
