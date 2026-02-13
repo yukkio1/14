@@ -40,7 +40,7 @@
             height: 100%;
         }
 
-        /* SOBRE CENTRAL */
+        /* SOBRE */
         .container {
             position: relative;
             cursor: pointer;
@@ -91,7 +91,7 @@
         .container.open .envelope::before { transform: rotateX(180deg); z-index: 1; }
         .container.open .letter { transform: translateY(-160px); opacity: 1; z-index: 15; }
 
-        /* DECORACIONES LATERALES */
+        /* DECORACIONES */
         .decoration {
             position: absolute;
             width: 300px;
@@ -105,7 +105,6 @@
             justify-content: space-between;
         }
 
-        /* Empujamos las fotos más hacia afuera del centro */
         .left-side { right: 60%; align-items: flex-end; }
         .right-side { left: 60%; align-items: flex-start; }
 
@@ -132,29 +131,23 @@
             z-index: 51;
         }
 
-        /* Posiciones laterales estratégicas */
-        .left-side .mini-photo:nth-child(2) { transform: rotate(-12deg) translateX(-35px); }
-        .left-side .mini-photo:nth-child(3) { transform: rotate(8deg) translateX(15px); }
-        .left-side .mini-photo:nth-child(4) { transform: rotate(-18deg) translateX(-45px); }
-        .left-side .mini-photo:nth-child(5) { transform: rotate(10deg) translateX(10px); }
-
-        .right-side .mini-photo:nth-child(2) { transform: rotate(12deg) translateX(35px); }
-        .right-side .mini-photo:nth-child(3) { transform: rotate(-8deg) translateX(-15px); }
-        .right-side .mini-photo:nth-child(4) { transform: rotate(18deg) translateX(45px); }
-        .right-side .mini-photo:nth-child(5) { transform: rotate(-10deg) translateX(-10px); }
-
-        /* OPTIMIZACIÓN MÓVIL (S23 ULTRA) */
+        /* AJUSTE MOVIL: FOTOS A LOS COSTADOS EXTREMOS */
         @media (max-width: 600px) {
             .envelope { width: 180px; height: 120px; }
             .envelope::before { border-left-width: 90px; border-right-width: 90px; border-top-width: 60px; }
-            .decoration { width: 130px; height: 420px; }
-            .mini-photo { width: 68px; height: 68px; }
-            .left-side { right: 54%; }
-            .right-side { left: 54%; }
-            .container.open .letter { transform: translateY(-125px); font-size: 0.85rem; }
-            /* Suavizamos el movimiento en móvil para que no se corten */
-            .left-side .mini-photo { transform: rotate(-6deg) translateX(-15px) !important; }
-            .right-side .mini-photo { transform: rotate(6deg) translateX(15px) !important; }
+            
+            .decoration { width: 100px; height: 450px; }
+            .mini-photo { width: 60px; height: 60px; }
+
+            /* Empujamos las fotos hacia los bordes de la pantalla */
+            .left-side { right: 68%; } 
+            .right-side { left: 68%; }
+
+            .container.open .letter { transform: translateY(-130px); font-size: 0.85rem; }
+
+            /* Rotación para que miren hacia el centro */
+            .left-side .mini-photo { transform: rotate(-8deg) translateX(-10px) !important; }
+            .right-side .mini-photo { transform: rotate(8deg) translateX(10px) !important; }
         }
 
         .particle {
@@ -209,7 +202,7 @@
             
             if (container.classList.contains('open')) {
                 document.body.classList.add('night-mode');
-                music.play().catch(e => console.log("Audio block active"));
+                music.play().catch(e => console.log("Audio play blocked"));
                 for (let i = 0; i < 30; i++) { setTimeout(createParticle, i * 150); }
             } else {
                 document.body.classList.remove('night-mode');
