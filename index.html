@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Para mi persona favorita ❤️</title>
     <style>
         :root {
@@ -31,16 +31,24 @@
             background-color: #050a18;
         }
 
-        /* SOBRE Y CARTA (SIEMPRE AL CENTRO) */
+        /* CONTENEDOR MAESTRO: Mantiene todo unido */
+        .scene {
+            position: relative;
+            width: 100%;
+            max-width: 1000px;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
         .container {
             position: relative;
             cursor: pointer;
             z-index: 100;
-            transition: transform 0.5s;
         }
 
         .envelope {
-            position: relative;
             width: 280px;
             height: 180px;
             background-color: var(--color-env);
@@ -54,12 +62,12 @@
             content: "";
             position: absolute;
             top: 0;
-            z-index: 12;
             border-left: 140px solid transparent;
             border-right: 140px solid transparent;
             border-top: 90px solid var(--color-env2);
             transform-origin: top;
             transition: transform 0.6s ease-in-out;
+            z-index: 12;
         }
 
         .letter {
@@ -82,44 +90,45 @@
         }
 
         .container.open .envelope::before { transform: rotateX(180deg); z-index: 1; }
-        .container.open .letter { 
-            transform: translateY(-160px); 
-            opacity: 1; 
-            z-index: 15; 
-        }
+        .container.open .letter { transform: translateY(-160px); opacity: 1; z-index: 15; }
 
-        /* DECORACIONES (RAMOS Y FOTOS) */
+        /* RAMOS Y FOTOS: Ahora usan posiciones fijas relativas al centro */
         .decoration {
             position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 30vw; /* Ancho basado en la pantalla */
-            max-width: 400px;
-            min-width: 150px;
+            width: 300px;
+            height: 450px;
             opacity: 0;
             transition: all 1.2s ease-in-out;
             pointer-events: none;
             z-index: 50;
             display: flex;
             flex-direction: column;
+            justify-content: center;
         }
 
-        .left-side { left: 2vw; align-items: flex-end; }
-        .right-side { right: 2vw; align-items: flex-start; }
+        .left-side { 
+            right: 55%; /* Se pega al lado izquierdo del sobre */
+            align-items: flex-end; 
+        }
+
+        .right-side { 
+            left: 55%; /* Se pega al lado derecho del sobre */
+            align-items: flex-start; 
+        }
 
         .container.open ~ .decoration { opacity: 1; }
 
         .branch-img {
             position: absolute;
             width: 100%;
-            height: 110%;
+            height: 100%;
             object-fit: contain;
             z-index: -1;
         }
 
         .mini-photo {
-            width: 80px;
-            height: 80px;
+            width: 85px;
+            height: 85px;
             border: 3px solid white;
             border-radius: 5px;
             object-fit: cover;
@@ -128,25 +137,21 @@
             z-index: 51;
         }
 
-        /* Zigzag */
-        .left-side .mini-photo:nth-child(odd) { transform: rotate(-5deg) translateX(-10px); }
-        .left-side .mini-photo:nth-child(even) { transform: rotate(5deg) translateX(5px); }
-        .right-side .mini-photo:nth-child(odd) { transform: rotate(5deg) translateX(10px); }
-        .right-side .mini-photo:nth-child(even) { transform: rotate(-5deg) translateX(-5px); }
-
-        /* AJUSTES PARA CELULAR (PANTALLAS PEQUEÑAS) */
-        @media (max-width: 600px) {
-            .decoration { width: 120px; min-width: 100px; }
-            .left-side { left: -10px; } /* Se pegan un poco más al borde para que no tapen el centro */
-            .right-side { right: -10px; }
-            .mini-photo { width: 65px; height: 65px; }
-            .container.open { transform: scale(0.85) translateY(50px); } /* Achica el sobre para que quepa todo */
+        /* Ajustes para pantallas pequeñas (S23 Ultra) */
+        @media (max-width: 768px) {
+            .envelope { width: 220px; height: 140px; }
+            .envelope::before { border-left-width: 110px; border-right-width: 110px; border-top-width: 70px; }
+            .decoration { width: 140px; }
+            .mini-photo { width: 60px; height: 60px; }
+            .left-side { right: 52%; }
+            .right-side { left: 52%; }
+            .container.open .letter { transform: translateY(-120px); font-size: 0.9rem; }
         }
 
         .particle {
             position: absolute;
             pointer-events: none;
-            z-index: 10; 
+            z-index: 200; 
             animation: floatUp 3.5s linear forwards;
         }
 
@@ -160,30 +165,32 @@
 
     <audio id="loveMusic" src="music.mp3"></audio>
 
-    <div class="container" onclick="openLetter(this)">
-        <div class="envelope"></div>
-        <div class="letter">
-            <p><strong>¡Vámonos a Marte!</strong></p>
-            <p>Donde nadie nos busque... ✨</p>
-            <p>Feliz 14 de Febrero.</p>
-            <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" width="20">
+    <div class="scene">
+        <div class="container" onclick="openLetter(this)">
+            <div class="envelope"></div>
+            <div class="letter">
+                <p><strong>¡Vámonos a Marte!</strong></p>
+                <p>Donde nadie nos busque... ✨</p>
+                <p>Feliz 14 de febrero.</p>
+                <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" width="20">
+            </div>
         </div>
-    </div>
 
-    <div class="decoration left-side">
-        <img src="izquierda.jpg" class="branch-img">
-        <img src="foto1.jpg" class="mini-photo">
-        <img src="foto2.jpg" class="mini-photo">
-        <img src="foto3.jpg" class="mini-photo">
-        <img src="foto4.jpg" class="mini-photo">
-    </div>
+        <div class="decoration left-side">
+            <img src="izquierda.jpg" class="branch-img">
+            <img src="foto1.jpg" class="mini-photo">
+            <img src="foto2.jpg" class="mini-photo">
+            <img src="foto3.jpg" class="mini-photo">
+            <img src="foto4.jpg" class="mini-photo">
+        </div>
 
-    <div class="decoration right-side">
-        <img src="derecha.jpg" class="branch-img">
-        <img src="foto5.jpg" class="mini-photo">
-        <img src="foto6.jpg" class="mini-photo">
-        <img src="foto7.jpg" class="mini-photo">
-        <img src="foto8.jpg" class="mini-photo">
+        <div class="decoration right-side">
+            <img src="derecha.jpg" class="branch-img">
+            <img src="foto5.jpg" class="mini-photo">
+            <img src="foto6.jpg" class="mini-photo">
+            <img src="foto7.jpg" class="mini-photo">
+            <img src="foto8.jpg" class="mini-photo">
+        </div>
     </div>
 
     <script>
@@ -193,8 +200,8 @@
             
             if (container.classList.contains('open')) {
                 document.body.classList.add('night-mode');
-                music.play().catch(e => console.log("Interacción requerida"));
-                for (let i = 0; i < 35; i++) { setTimeout(createParticle, i * 120); }
+                music.play().catch(e => console.log("Play blocked"));
+                for (let i = 0; i < 30; i++) { setTimeout(createParticle, i * 150); }
             } else {
                 document.body.classList.remove('night-mode');
                 music.pause();
@@ -207,7 +214,7 @@
             p.className = 'particle';
             p.innerHTML = ['❤️', '✨', '🌸', '💖'][Math.floor(Math.random() * 4)];
             p.style.left = Math.random() * 100 + 'vw';
-            p.style.bottom = '5%';
+            p.style.bottom = '10%';
             p.style.fontSize = (Math.random() * 20 + 10) + 'px';
             document.body.appendChild(p);
             setTimeout(() => p.remove(), 4000);
