@@ -37,11 +37,10 @@
             justify-content: center;
             align-items: center;
             width: 100%;
-            max-width: 1200px;
             height: 100%;
         }
 
-        /* SOBRE */
+        /* SOBRE Y CARTA */
         .container {
             position: relative;
             cursor: pointer;
@@ -92,10 +91,10 @@
         .container.open .envelope::before { transform: rotateX(180deg); z-index: 1; }
         .container.open .letter { transform: translateY(-160px); opacity: 1; z-index: 15; }
 
-        /* DECORACIONES Y FOTOS (ORDENADAS) */
+        /* DECORACIONES Y FOTOS ORDENADAS */
         .decoration {
             position: absolute;
-            width: 250px;
+            width: 300px;
             height: 500px;
             opacity: 0;
             transition: all 1.2s ease-in-out;
@@ -103,30 +102,26 @@
             z-index: 50;
             display: flex;
             flex-direction: column;
-            justify-content: space-evenly;
+            justify-content: space-around;
         }
 
-        /* Posicionamiento para que NO toquen la carta */
-        .left-side { right: 58%; align-items: flex-end; }
-        .right-side { left: 58%; align-items: flex-start; }
+        .left-side { right: 55%; align-items: flex-end; }
+        .right-side { left: 55%; align-items: flex-start; }
 
         .container.open ~ .decoration { opacity: 1; }
 
         .branch-img {
             position: absolute;
-            width: 350px;
+            width: 100%;
             height: 100%;
             object-fit: contain;
             z-index: -1;
         }
 
-        .left-side .branch-img { right: -60px; }
-        .right-side .branch-img { left: -60px; }
-
-        /* Estilo Collage para las fotos */
+        /* Estilo para que las FOTOS se vean en orden */
         .mini-photo {
-            width: 90px;
-            height: 90px;
+            width: 85px;
+            height: 85px;
             border: 4px solid white;
             border-radius: 2px;
             object-fit: cover;
@@ -135,29 +130,26 @@
             transition: transform 0.3s;
         }
 
-        /* Dispersión manual para que se vean todas */
-        .left-side .mini-photo:nth-child(2) { transform: rotate(-10deg) translateX(-20px); }
-        .left-side .mini-photo:nth-child(3) { transform: rotate(5deg) translateX(10px); }
-        .left-side .mini-photo:nth-child(4) { transform: rotate(-15deg) translateX(-30px); }
-        .left-side .mini-photo:nth-child(5) { transform: rotate(8deg) translateX(0px); }
+        /* Posiciones manuales para que NO se tapen */
+        .left-side .mini-photo:nth-child(2) { transform: rotate(-10deg) translate(-20px, 0px); }
+        .left-side .mini-photo:nth-child(3) { transform: rotate(5deg) translate(10px, 0px); }
+        .left-side .mini-photo:nth-child(4) { transform: rotate(-15deg) translate(-30px, 0px); }
+        .left-side .mini-photo:nth-child(5) { transform: rotate(8deg) translate(5px, 0px); }
 
-        .right-side .mini-photo:nth-child(2) { transform: rotate(10deg) translateX(20px); }
-        .right-side .mini-photo:nth-child(3) { transform: rotate(-5deg) translateX(-10px); }
-        .right-side .mini-photo:nth-child(4) { transform: rotate(15deg) translateX(30px); }
-        .right-side .mini-photo:nth-child(5) { transform: rotate(-8deg) translateX(0px); }
+        .right-side .mini-photo:nth-child(2) { transform: rotate(10deg) translate(20px, 0px); }
+        .right-side .mini-photo:nth-child(3) { transform: rotate(-5deg) translate(-10px, 0px); }
+        .right-side .mini-photo:nth-child(4) { transform: rotate(15deg) translate(30px, 0px); }
+        .right-side .mini-photo:nth-child(5) { transform: rotate(-8deg) translate(-5px, 0px); }
 
-        /* AJUSTES MÓVILES (S23 ULTRA) */
+        /* AJUSTES PARA TU S23 ULTRA */
         @media (max-width: 600px) {
-            .envelope { width: 180px; height: 120px; }
-            .envelope::before { border-left-width: 90px; border-right-width: 90px; border-top-width: 60px; }
-            .decoration { width: 120px; height: 400px; }
-            .mini-photo { width: 65px; height: 65px; }
+            .envelope { width: 200px; height: 130px; }
+            .envelope::before { border-left-width: 100px; border-right-width: 100px; border-top-width: 65px; }
+            .decoration { width: 120px; }
+            .mini-photo { width: 60px; height: 60px; }
             .left-side { right: 52%; }
             .right-side { left: 52%; }
-            .container.open .letter { transform: translateY(-120px); font-size: 0.85rem; }
-            /* Menos dispersión en móvil para no salirse */
-            .left-side .mini-photo { transform: rotate(-5deg) !important; }
-            .right-side .mini-photo { transform: rotate(5deg) !important; }
+            .container.open .letter { transform: translateY(-110px); font-size: 0.8rem; }
         }
 
         .particle {
@@ -183,7 +175,7 @@
             <div class="letter">
                 <p><strong>¡Vámonos a Marte!</strong></p>
                 <p>Donde nadie nos busque... ✨</p>
-                <p>Te amo, preciosa.</p>
+                <p>Feliz 14 de Febrero.</p>
                 <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" width="20">
             </div>
         </div>
@@ -212,7 +204,7 @@
             
             if (container.classList.contains('open')) {
                 document.body.classList.add('night-mode');
-                music.play().catch(e => console.log("Interacción necesaria"));
+                music.play().catch(e => console.log("Audio play blocked"));
                 for (let i = 0; i < 30; i++) { setTimeout(createParticle, i * 150); }
             } else {
                 document.body.classList.remove('night-mode');
